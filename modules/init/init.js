@@ -1,12 +1,12 @@
 const Database = require("../database/database")
 
-function initDatabase(app) {
+function initDatabase() {
   return new Promise((resolve, reject) => {
     try {
       let database = new Database(".nyanga")
-      let firstRun = database.listCollection()
+      let firstRun = database.getCollection("appSettings")
 
-      if (firstRun.length === 0) {
+      if (firstRun === null) {
         database.createCollection("mangaCollection")
         database.createCollection("appSettings")
 
