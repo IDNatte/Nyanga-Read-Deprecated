@@ -2,7 +2,7 @@
   "name": "read-nyanga",
   "packageManager": "yarn@3.3.1",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "electron/main.js",
   "author": {
     "email": "idnatte@gmail.com",
     "name": "IDNatte",
@@ -31,12 +31,10 @@
     "electron:nouibuildtest": "tsc && electron ./electron/main.js",
     "electron:lint": "eslint -c .eslintrc --ext .ts ./src",
     "electron:format": "prettier --write .",
-    "electron:publish:win": "electron-builder --win -p always",
-    "electron:publish:linux": "electron-builder --linux -p always",
-    "app:pack": "electron-builder --dir",
-    "app:build": "cd layout && yarn run build && cd .. && electron-builder",
-    "app:release:win": "cd layout && yarn run build && cd .. && yarn run electron:publish:win",
-    "app:release:linux": "cd layout && yarn run build && cd .. && yarn run electron:publish:linux"
+    "app:pack": "tsc && electron-builder --dir",
+    "app:build": "cd layout && yarn run build && cd .. && tsc && electron-builder",
+    "app:release:win": "cd layout && yarn run build && cd .. && tsc && electron-builder --win -p always",
+    "app:release:linux": "cd layout && yarn run build && cd .. && tsc && electron-builder --linux -p always"
   },
   "dependencies": {
     "electron-serve": "^1.1.0",
@@ -64,7 +62,7 @@
     },
     "files": [
       "*/**",
-      "main.js",
+      "layout/build/*",
       "!*.yml",
       "!*.lock",
       "!.github",
@@ -73,6 +71,7 @@
       "!.prettierrc",
       "!.editorconfig",
       "!.prettierignore",
+      "!src/*",
       "!build/*",
       "!docs/*",
       "!**/dist/*",

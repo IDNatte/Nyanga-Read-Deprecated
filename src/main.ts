@@ -4,7 +4,7 @@ import * as path from 'path'
 
 import { UpsertKeyValue } from './modules/other/cors'
 
-const loadURL = serve({ directory: "../layout/build" })
+const loadURL = serve({ directory: "./layout/build" })
 
 
 function mainWindow() {

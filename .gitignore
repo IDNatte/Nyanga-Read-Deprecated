@@ -12,5 +12,9 @@ node_modules
 #.pnp.*
 dist
 
+# Electron TypeScript build
+electron
+
 # GH_Token
 gh_token.txt
+
