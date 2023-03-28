@@ -14,21 +14,18 @@ function rendererEventModule(win) {
   // intialize first database
 
   ipcMain.on("load:check-init", (event) => {
-    fs.access(
-      path.join(os.homedir(), ".nyanga/nyangaread.database.json"),
-      (err) => {
-        if (err) {
-          initDatabase().then((result) => {
-            if (result.created) {
-              let data = {
-                reloadRequired: true
-              }
-              event.sender.send("local:check-init", data)
+    fs.access(path.join(os.homedir(), ".nyanga/nyangaread.database.json"), (err) => {
+      if (err) {
+        initDatabase().then((result) => {
+          if (result.created) {
+            let data = {
+              reloadRequired: true,
             }
-          })
-        }
+            event.sender.send("local:check-init", data)
+          }
+        })
       }
-    )
+    })
   })
 
   // call reload if full reload required
@@ -66,7 +63,7 @@ function rendererEventModule(win) {
 
     autoUpdater.on("checking-for-update", () => {
       let data = {
-        checking: true
+        checking: true,
       }
       event.sender.send("app:app-update", data)
     })
@@ -75,7 +72,7 @@ function rendererEventModule(win) {
       let data = {
         checking: false,
         info: info,
-        status: "update-available"
+        status: "update-available",
       }
       event.sender.send("app:app-update", data)
     })
@@ -84,7 +81,7 @@ function rendererEventModule(win) {
       let data = {
         checking: false,
         info: info,
-        status: "update-unavailable"
+        status: "update-unavailable",
       }
       event.sender.send("app:app-update", data)
     })
@@ -93,7 +90,7 @@ function rendererEventModule(win) {
       let data = {
         checking: false,
         info: err,
-        status: "error"
+        status: "error",
       }
       event.sender.send("app:app-update", data)
     })
@@ -102,7 +99,7 @@ function rendererEventModule(win) {
       let data = {
         checking: false,
         info: "downloading update !",
-        status: "downloading"
+        status: "downloading",
       }
       event.sender.send("app:app-update", data)
     })
@@ -111,28 +108,24 @@ function rendererEventModule(win) {
       let data = {
         checking: false,
         info: "update downloaded !",
-        status: "downloaded"
+        status: "downloaded",
       }
       event.sender.send("app:app-update", data)
     })
   })
 
   ipcMain.on("load:app-about", (event) => {
-    readFile(
-      path.join(__dirname, "../other/docs/about.md"),
-      "utf-8",
-      (err, data) => {
-        if (err) {
-          console.log(err)
-          event.sender.send("local:app-about", err)
-        }
-
-        event.sender.send("local:app-about", {
-          about: JSON.stringify(data),
-          appVersion: app.getVersion()
-        })
+    readFile(path.join(__dirname, "../other/docs/about.md"), "utf-8", (err, data) => {
+      if (err) {
+        console.log(err)
+        event.sender.send("local:app-about", err)
       }
-    )
+
+      event.sender.send("local:app-about", {
+        about: JSON.stringify(data),
+        appVersion: app.getVersion(),
+      })
+    })
   })
 
   ipcMain.on("load:app-lang", (event) => {
@@ -153,10 +146,7 @@ function rendererEventModule(win) {
     let dbAppSettings = database.getCollection("appSettings")
 
     if (dbAppSettings) {
-      let checkDbIfPopulated = dbAppSettings
-        .chain()
-        .find({ settingsID: "language" })
-        .count()
+      let checkDbIfPopulated = dbAppSettings.chain().find({ settingsID: "language" }).count()
 
       if (checkDbIfPopulated === 0) {
         dbAppSettings.insert({ settingsID: "language", data: language })
@@ -173,7 +163,7 @@ function rendererEventModule(win) {
   ipcMain.on("load:manga-all", (event) => {
     let mangaCollection = database.getCollection("mangaCollection")
     let data = {
-      manga: mangaCollection.chain().data({ removeMeta: true }).reverse()
+      manga: mangaCollection.chain().data({ removeMeta: true }).reverse(),
     }
 
     event.sender.send("local:manga-load-all", data)
@@ -182,9 +172,7 @@ function rendererEventModule(win) {
   ipcMain.on("load:manga", (event) => {
     let mangaCollection = database.getCollection("mangaCollection")
 
-    let checkCollection = database
-      .listCollection()
-      .find(({ name }) => name === "mangaCollection")
+    let checkCollection = database.listCollection().find(({ name }) => name === "mangaCollection")
 
     if (checkCollection) {
       let count = mangaCollection.count()
@@ -196,19 +184,19 @@ function rendererEventModule(win) {
 
         data = {
           manga: mangaData,
-          page: true
+          page: true,
         }
       } else {
         data = {
           manga: mangaCollection.chain().data({ removeMeta: true }).reverse(),
-          page: false
+          page: false,
         }
       }
       event.sender.send("local:manga-load", data)
     } else {
       let data = {
         manga: [],
-        page: false
+        page: false,
       }
 
       event.sender.send("local:manga-load", data)

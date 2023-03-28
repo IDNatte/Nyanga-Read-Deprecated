@@ -8,16 +8,16 @@ class Database {
     this.databasePath = path.join(os.homedir(), filepath)
     try {
       fs.readdirSync(this.databasePath)
-      this.database = new loki(
-        path.join(this.databasePath, "nyangaread.database.json"),
-        { autoload: true, autosave: true }
-      )
+      this.database = new loki(path.join(this.databasePath, "nyangaread.database.json"), {
+        autoload: true,
+        autosave: true,
+      })
     } catch {
       fs.mkdirSync(this.databasePath, { recursive: true })
-      this.database = new loki(
-        path.join(this.databasePath, "nyangaread.database.json"),
-        { autoload: true, autosave: true }
-      )
+      this.database = new loki(path.join(this.databasePath, "nyangaread.database.json"), {
+        autoload: true,
+        autosave: true,
+      })
     }
   }
 

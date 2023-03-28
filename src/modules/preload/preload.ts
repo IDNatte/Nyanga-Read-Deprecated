@@ -1,10 +1,14 @@
-const { contextBridge, ipcRenderer, ipcMain } = require("electron")
+// const { contextBridge, ipcRenderer, ipcMain } = require("electron")
+
+import type { LanguageTypes, MangaTypes } from '../types/preload.types'
+import { contextBridge, ipcRenderer } from 'electron'
+
 
 contextBridge.exposeInMainWorld("backendAPI", {
   // manga save
   triggerSave: (mangaId) => {
-    let manga = {
-      mangaId
+    const manga: MangaTypes = {
+      mangaId,
     }
     ipcRenderer.send("save:manga", manga)
   },
@@ -56,9 +60,9 @@ contextBridge.exposeInMainWorld("backendAPI", {
   },
 
   triggerAppSetLanguage: (appLang) => {
-    let language = {
+    const language: LanguageTypes = {
       langCode: appLang.code,
-      langTitle: appLang.title
+      langTitle: appLang.title,
     }
 
     ipcRenderer.send("save:app-lang", language)
@@ -98,7 +102,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
 
   triggerWinResize: () => {
     ipcRenderer.send("win:resize")
-  }
+  },
 
   // end of application related
 })

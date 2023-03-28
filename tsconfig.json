@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "rootDir": "src",
+    "strict": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "lib": ["ES2022"],
+    "outDir": "electron",
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "exclude": ["layout/", "build/"],
+  "include": ["src/**/*"]
+}

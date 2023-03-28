@@ -13,7 +13,7 @@ function initDatabase(app) {
         let initSettings = database.getCollection("appSettings")
         initSettings.insert({
           settingsID: "language",
-          data: { langCode: "en", langTitle: "english" }
+          data: { langCode: "en", langTitle: "english" },
         })
       }
 

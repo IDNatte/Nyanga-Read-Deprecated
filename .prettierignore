@@ -4,3 +4,5 @@ build
 dist
 gh_token.txt
 modules/other/doc
+.github
+.yarn
