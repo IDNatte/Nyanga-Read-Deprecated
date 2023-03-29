@@ -1,11 +1,11 @@
-import { app, BrowserWindow } from 'electron'
-import serve from 'electron-serve'
-import * as path from 'path'
+import { app, BrowserWindow } from "electron"
+import serve from "electron-serve"
+import * as path from "path"
 
-import { UpsertKeyValue } from './modules/other/cors'
+import rendererEventModule from "./modules/event/main.event"
+import { UpsertKeyValue } from "./modules/other/cors"
 
 const loadURL = serve({ directory: "./layout/build" })
-
 
 function mainWindow() {
   const win = new BrowserWindow({
@@ -42,6 +42,8 @@ function mainWindow() {
   })
 
   win.setTitle("Read Nyanga")
+
+  rendererEventModule(win)
 }
 
 app.whenReady().then(() => {

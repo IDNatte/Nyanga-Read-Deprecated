@@ -1,41 +1,40 @@
-const { ipcMain, app } = require("electron")
-const { autoUpdater } = require("electron-updater")
-const { readFile } = require("fs")
-const path = require("path")
-const fs = require("fs")
-const os = require("os")
+import type { BrowserWindow } from "electron"
+// import type { appUpdateType } from "../types/electron.types"
 
-const { initDatabase } = require("../init/init")
-const Database = require("../database/database")
+import { ipcMain, app } from "electron"
+import { autoUpdater } from "electron-updater"
+import { access, readFile } from "fs"
+import { join } from "path"
+import { homedir } from "os"
 
-let database = new Database(".nyanga")
+import Database from "../database/database"
+import initDatabase from "../init/init"
 
-function rendererEventModule(win) {
-  // intialize first database
+const database = new Database(".nyanga")
 
-  ipcMain.on("load:check-init", (event) => {
-    fs.access(path.join(os.homedir(), ".nyanga/nyangaread.database.json"), (err) => {
+export default function rendererEventModule(win: BrowserWindow): void {
+  ipcMain.on("load:check-init", (event: any) => {
+    access(join(homedir(), ".nyanga/nyangaread.database.json"), (err) => {
       if (err) {
-        initDatabase().then((result) => {
+        // initDatabase().then
+        initDatabase().then((result: any) => {
           if (result.created) {
-            let data = {
+            const data = {
               reloadRequired: true,
             }
-            event.sender.send("local:check-init", data)
+
+            event.sender.send("local:chekc-init", data)
           }
         })
       }
     })
   })
 
-  // call reload if full reload required
-
-  ipcMain.on("load:app-full-reload", () => {
+  ipcMain.on("load:app-full-reload", (event: any) => {
     app.relaunch()
     app.quit()
   })
 
-  // event
   ipcMain.on("win:minimize", () => {
     if (!win.isMinimized()) {
       win.minimize()
@@ -54,7 +53,7 @@ function rendererEventModule(win) {
     win.close()
   })
 
-  ipcMain.on("run:app-apply-update", (event) => {
+  ipcMain.on("run:app-apply-update", (event: any) => {
     autoUpdater.quitAndInstall()
   })
 
@@ -62,14 +61,14 @@ function rendererEventModule(win) {
     autoUpdater.checkForUpdates()
 
     autoUpdater.on("checking-for-update", () => {
-      let data = {
+      const data = {
         checking: true,
       }
       event.sender.send("app:app-update", data)
     })
 
     autoUpdater.on("update-available", (info) => {
-      let data = {
+      const data = {
         checking: false,
         info: info,
         status: "update-available",
@@ -78,7 +77,7 @@ function rendererEventModule(win) {
     })
 
     autoUpdater.on("update-not-available", (info) => {
-      let data = {
+      const data = {
         checking: false,
         info: info,
         status: "update-unavailable",
@@ -87,7 +86,7 @@ function rendererEventModule(win) {
     })
 
     autoUpdater.on("error", (err) => {
-      let data = {
+      const data = {
         checking: false,
         info: err,
         status: "error",
@@ -96,7 +95,7 @@ function rendererEventModule(win) {
     })
 
     autoUpdater.on("download-progress", () => {
-      let data = {
+      const data = {
         checking: false,
         info: "downloading update !",
         status: "downloading",
@@ -105,7 +104,7 @@ function rendererEventModule(win) {
     })
 
     autoUpdater.on("update-downloaded", () => {
-      let data = {
+      const data = {
         checking: false,
         info: "update downloaded !",
         status: "downloaded",
@@ -115,9 +114,8 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("load:app-about", (event) => {
-    readFile(path.join(__dirname, "../other/docs/about.md"), "utf-8", (err, data) => {
+    readFile(join(__dirname, "../other/docs/about.md"), "utf-8", (err, data) => {
       if (err) {
-        console.log(err)
         event.sender.send("local:app-about", err)
       }
 
@@ -129,24 +127,24 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("load:app-lang", (event) => {
-    let dbAppSettings = database.getCollection("appSettings")
+    const dbAppSettings = database.getCollection("appSettings")
 
     if (dbAppSettings) {
-      let language = dbAppSettings
+      const language = dbAppSettings
         .chain()
         .find({ settingsID: "language" })
         .data({ removeMeta: true })
 
-      let data = language[0]
+      const data = language[0]
       event.sender.send("local:app-lang", data)
     }
   })
 
   ipcMain.on("save:app-lang", (event, language) => {
-    let dbAppSettings = database.getCollection("appSettings")
+    const dbAppSettings = database.getCollection("appSettings")
 
     if (dbAppSettings) {
-      let checkDbIfPopulated = dbAppSettings.chain().find({ settingsID: "language" }).count()
+      const checkDbIfPopulated = dbAppSettings.chain().find({ settingsID: "language" }).count()
 
       if (checkDbIfPopulated === 0) {
         dbAppSettings.insert({ settingsID: "language", data: language })
@@ -161,8 +159,8 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("load:manga-all", (event) => {
-    let mangaCollection = database.getCollection("mangaCollection")
-    let data = {
+    const mangaCollection = database.getCollection("mangaCollection")
+    const data = {
       manga: mangaCollection.chain().data({ removeMeta: true }).reverse(),
     }
 
@@ -170,17 +168,17 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("load:manga", (event) => {
-    let mangaCollection = database.getCollection("mangaCollection")
+    const mangaCollection = database.getCollection("mangaCollection")
 
-    let checkCollection = database.listCollection().find(({ name }) => name === "mangaCollection")
+    const checkCollection = database.listCollection().find(({ name }) => name === "mangaCollection")
 
     if (checkCollection) {
-      let count = mangaCollection.count()
+      const count = mangaCollection.count()
       let data
 
       if (count > 3) {
-        let manga = mangaCollection.chain().data({ removeMeta: true }).reverse()
-        let mangaData = manga.slice(0, 3)
+        const manga = mangaCollection.chain().data({ removeMeta: true }).reverse()
+        const mangaData = manga.slice(0, 3)
 
         data = {
           manga: mangaData,
@@ -194,7 +192,7 @@ function rendererEventModule(win) {
       }
       event.sender.send("local:manga-load", data)
     } else {
-      let data = {
+      const data = {
         manga: [],
         page: false,
       }
@@ -204,8 +202,8 @@ function rendererEventModule(win) {
   })
 
   ipcMain.on("save:manga", (event, manga) => {
-    let mangaCollection = database.getCollection("mangaCollection")
-    let checkMangaId = mangaCollection.findOne({ mangaId: manga.mangaId })
+    const mangaCollection = database.getCollection("mangaCollection")
+    const checkMangaId = mangaCollection.findOne({ mangaId: manga.mangaId })
     if (!checkMangaId) {
       mangaCollection.insert(manga)
       event.sender.send("manga:saved", "Manga Saved")
@@ -214,5 +212,3 @@ function rendererEventModule(win) {
     }
   })
 }
-
-module.exports = rendererEventModule

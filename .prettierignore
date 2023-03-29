@@ -1,4 +1,5 @@
-layout
+electron/
+layout/
 ./yarnrc.yml
 build
 dist

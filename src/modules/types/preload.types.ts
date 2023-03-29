@@ -1,5 +1,5 @@
 export type LanguageTypes = {
-  langCode: string,
+  langCode: string
   langTitle: string
 }
 

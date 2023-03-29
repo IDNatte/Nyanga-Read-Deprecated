@@ -1,19 +1,16 @@
-// const { contextBridge, ipcRenderer, ipcMain } = require("electron")
-
-import type { LanguageTypes, MangaTypes } from '../types/preload.types'
-import { contextBridge, ipcRenderer } from 'electron'
-
+import type { LanguageTypes, MangaTypes } from "../types/preload.types"
+import { contextBridge, ipcRenderer } from "electron"
 
 contextBridge.exposeInMainWorld("backendAPI", {
   // manga save
-  triggerSave: (mangaId) => {
+  triggerSave: (mangaId: MangaTypes) => {
     const manga: MangaTypes = {
-      mangaId,
+      mangaId: mangaId.mangaId,
     }
     ipcRenderer.send("save:manga", manga)
   },
 
-  onMangaSave: (callback) => {
+  onMangaSave: (callback: () => any) => {
     ipcRenderer.on("manga:saved", callback)
   },
 
@@ -28,11 +25,11 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("load:manga-all")
   },
 
-  onMangaLoadAll: (callback) => {
+  onMangaLoadAll: (callback: () => any) => {
     ipcRenderer.on("local:manga-load-all", callback)
   },
 
-  onMangaLoad: (callback) => {
+  onMangaLoad: (callback: () => any) => {
     ipcRenderer.on("local:manga-load", callback)
   },
   // end of manga load
@@ -47,7 +44,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("load:check-init")
   },
 
-  onAppCheckInit: (callback) => {
+  onAppCheckInit: (callback: () => any) => {
     ipcRenderer.on("local:check-init", callback)
   },
 
@@ -55,11 +52,11 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("load:app-lang")
   },
 
-  onGetAppLang: (callback) => {
+  onGetAppLang: (callback: () => any) => {
     ipcRenderer.on("local:app-lang", callback)
   },
 
-  triggerAppSetLanguage: (appLang) => {
+  triggerAppSetLanguage: (appLang: any) => {
     const language: LanguageTypes = {
       langCode: appLang.code,
       langTitle: appLang.title,
@@ -68,7 +65,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("save:app-lang", language)
   },
 
-  onSetAppLanguage: (callback) => {
+  onSetAppLanguage: (callback: () => any) => {
     ipcRenderer.on("app-lang:saved", callback)
   },
 
@@ -76,7 +73,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("load:app-about")
   },
 
-  onAppAbout: (callback) => {
+  onAppAbout: (callback: () => any) => {
     ipcRenderer.on("local:app-about", callback)
   },
 
@@ -88,7 +85,7 @@ contextBridge.exposeInMainWorld("backendAPI", {
     ipcRenderer.send("run:app-apply-update")
   },
 
-  onAppUpdate: (callback) => {
+  onAppUpdate: (callback: () => any) => {
     ipcRenderer.on("app:app-update", callback)
   },
 
