@@ -1,0 +1,55 @@
+{
+  "appId": "com.IDNatte.readnyanga",
+  "productName": "Read Nyanga",
+  "publish": [
+    {
+      "provider": "github",
+      "repo": "mang-redr",
+      "owner": "IDNatte"
+    }
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "build/icon/image/logo.png"
+  },
+  "linux": {
+    "target": "appImage",
+    "icon": "build/icon/image/logo.png",
+    "category": "Utility"
+  },
+  "files": [
+    "*/**",
+    "!*.yml",
+    "!*.lock",
+    "!.github",
+    "!.gitignore",
+    "!gh_token.*",
+    "!.prettierrc",
+    "!.editorconfig",
+    "!.prettierignore",
+    "!src/*",
+    "!docs/*",
+    // "!layout/",
+    "!build/*",
+    "!**/dist/*",
+    "!**/github/*",
+    "!**/layout/{.*,*.json,*.ts,*.cjs,*.js}",
+    "!**/layout/.svelte-kit/*",
+    "!**/layout/.yarn/*",
+    "!**/layout/static/*",
+    "!**/layout/src/*",
+    "!**/layout/node_modules/*"
+  ],
+  "extraFiles": [
+    {
+      "from": "./layout/build/",
+      "to": "electron/",
+      "filter": [
+        "./layout/build/*"
+      ]
+    }
+  ],
+  "nsis": {
+    "installerIcon": "build/icon/image/logo-ico.ico"
+  }
+}

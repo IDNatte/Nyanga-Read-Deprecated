@@ -25,6 +25,7 @@
     "typescript": "^5.0.2"
   },
   "scripts": {
+    "electron:build": "tsc",
     "electron:watch": "tsc -w",
     "electron:dev": "APP_DEV=true nodemon --exec electron ./electron/main.js",
     "electron:uitestbuild": "cd ./layout/ && yarn run build && cd .. && tsc && electron ./electron/main.js",
@@ -39,52 +40,7 @@
   "dependencies": {
     "electron-serve": "^1.1.0",
     "electron-updater": "^5.3.0",
-    "lokijs": "^1.5.12"
-  },
-  "build": {
-    "appId": "com.IDNatte.readnyanga",
-    "productName": "Read Nyanga",
-    "publish": [
-      {
-        "provider": "github",
-        "repo": "mang-redr",
-        "owner": "IDNatte"
-      }
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "build/icon/image/logo.png"
-    },
-    "linux": {
-      "target": "appImage",
-      "icon": "build/icon/image/logo.png",
-      "category": "Utility"
-    },
-    "files": [
-      "*/**",
-      "layout/build/*",
-      "!*.yml",
-      "!*.lock",
-      "!.github",
-      "!.gitignore",
-      "!gh_token.*",
-      "!.prettierrc",
-      "!.editorconfig",
-      "!.prettierignore",
-      "!src/*",
-      "!build/*",
-      "!docs/*",
-      "!**/dist/*",
-      "!**/github/*",
-      "!**/layout/{.*,*.json,*.ts,*.cjs,*.js}",
-      "!**/layout/.svelte-kit/*",
-      "!**/layout/.yarn/*",
-      "!**/layout/static/*",
-      "!**/layout/src/*",
-      "!**/layout/node_modules/*"
-    ],
-    "nsis": {
-      "installerIcon": "build/icon/image/logo-ico.ico"
-    }
+    "lokijs": "^1.5.12",
+    "lowdb": "^5.1.0"
   }
 }

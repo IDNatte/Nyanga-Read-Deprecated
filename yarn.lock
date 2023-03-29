@@ -2457,6 +2457,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lowdb@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "lowdb@npm:5.1.0"
+  dependencies:
+    steno: ^3.0.0
+  checksum: 4913d6fbfe8d5ee659a797c1ad7bcd7ba7505a22d6b3fb9967f69588b77360e896dc6e0e218b281065a38f47a0127dbd16373fc8bb9a1776113ee572888bbc90
+  languageName: node
+  linkType: hard
+
 "lowercase-keys@npm:^2.0.0":
   version: 2.0.0
   resolution: "lowercase-keys@npm:2.0.0"
@@ -3092,6 +3101,7 @@ __metadata:
     electron-updater: ^5.3.0
     eslint: ^8.36.0
     lokijs: ^1.5.12
+    lowdb: ^5.1.0
     nodemon: ^2.0.22
     prettier: ^2.8.7
     prettierrc: ^0.0.0-5
@@ -3412,6 +3422,13 @@ __metadata:
   version: 1.0.0
   resolution: "stat-mode@npm:1.0.0"
   checksum: f9daea2dba41e1dffae5543a8af087ec8b56ff6ae1c729b5373b4f528e214f53260108dab522d2660cca2215dc3e61f164920a82136ad142dab50b3faa6f6090
+  languageName: node
+  linkType: hard
+
+"steno@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "steno@npm:3.0.0"
+  checksum: fb928451a4f96342b496b71147fbca0a20a5daf7bfd23a4a1cec8640d3c6c67176809169e9a5801ea44490d448b5b7ecb151b9fba434872c2d65549847f39460
   languageName: node
   linkType: hard
 
