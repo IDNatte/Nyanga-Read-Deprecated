@@ -13,6 +13,8 @@ node_modules
 dist
 
 # Electron TypeScript build
+main.js
+modules
 electron
 
 # GH_Token

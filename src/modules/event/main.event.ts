@@ -2,9 +2,9 @@ import type { BrowserWindow } from "electron"
 
 import { autoUpdater } from "electron-updater"
 import { ipcMain, app } from "electron"
-import { access, readFile } from "fs"
-import { homedir } from "os"
-import { join } from "path"
+import * as path from "path"
+import * as fs from "fs"
+import * as os from "os"
 
 import Database from "../database/database"
 import initDatabase from "../init/init"
@@ -13,7 +13,7 @@ const database = new Database(".nyanga")
 
 export default function rendererEventModule(win: BrowserWindow): void {
   ipcMain.on("load:check-init", (event: any) => {
-    access(join(homedir(), ".nyanga/nyangaread.database.json"), (err) => {
+    fs.access(path.join(os.homedir(), ".nyanga/nyangaread.database.json"), (err) => {
       if (err) {
         initDatabase().then((result: any) => {
           if (result.created) {
@@ -21,7 +21,7 @@ export default function rendererEventModule(win: BrowserWindow): void {
               reloadRequired: true,
             }
 
-            event.sender.send("local:chekc-init", data)
+            event.sender.send("local:check-init", data)
           }
         })
       }
@@ -112,7 +112,7 @@ export default function rendererEventModule(win: BrowserWindow): void {
   })
 
   ipcMain.on("load:app-about", (event) => {
-    readFile(join(__dirname, "./docs/appsdocs/about.md"), "utf-8", (err, data) => {
+    fs.readFile(path.join(__dirname, "../../docs/about.md"), "utf-8", (err, data) => {
       if (err) {
         event.sender.send("local:app-about", err)
       }

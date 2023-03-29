@@ -5,7 +5,7 @@ import * as path from "path"
 import rendererEventModule from "./modules/event/main.event"
 import { UpsertKeyValue } from "./modules/other/cors"
 
-const loadURL = serve({ directory: "./layout/build" })
+const loadURL = serve({ directory: path.join(__dirname, "layout/build") })
 
 function mainWindow() {
   const win = new BrowserWindow({

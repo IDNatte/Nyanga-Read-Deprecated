@@ -32,7 +32,7 @@
     "electron:nouibuildtest": "tsc && electron ./electron/main.js",
     "electron:lint": "eslint -c .eslintrc --ext .ts ./src",
     "electron:format": "prettier --write .",
-    "app:pack": "tsc && electron-builder --dir",
+    "app:pack": "electron-builder --dir",
     "app:build": "cd layout && yarn run build && cd .. && tsc && electron-builder",
     "app:release:win": "cd layout && yarn run build && cd .. && tsc && electron-builder --win -p always",
     "app:release:linux": "cd layout && yarn run build && cd .. && tsc && electron-builder --linux -p always"

@@ -29,7 +29,6 @@
     "!.prettierignore",
     "!src/*",
     "!docs/*",
-    // "!layout/",
     "!build/*",
     "!**/dist/*",
     "!**/github/*",
@@ -39,15 +38,6 @@
     "!**/layout/static/*",
     "!**/layout/src/*",
     "!**/layout/node_modules/*"
-  ],
-  "extraFiles": [
-    {
-      "from": "./layout/build/",
-      "to": "electron/",
-      "filter": [
-        "./layout/build/*"
-      ]
-    }
   ],
   "nsis": {
     "installerIcon": "build/icon/image/logo-ico.ico"
