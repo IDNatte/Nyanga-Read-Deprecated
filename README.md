@@ -4,8 +4,8 @@
 
 # Nyanga Read 😸
 
-test
-Manga Reader for desktop powered by sveltekit, mangadex, and electron.
+
+Manga Reader for desktop powered by sveltekit, mangadex, and pywebview.
 
 - Transalated manga based on what language you choose
 - Local bookmark save

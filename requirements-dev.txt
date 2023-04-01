@@ -1,0 +1,14 @@
+altgraph==0.17.3
+bottle==0.12.25
+cffi==1.15.1
+clr-loader==0.2.5
+pefile==2023.2.7
+proxy-tools==0.1.0
+pycparser==2.21
+pyinstaller==5.9.0
+pyinstaller-hooks-contrib==2023.1
+pythonnet==3.0.1
+pywebview==4.0.2
+pywin32-ctypes==0.2.0
+PyYAML==6.0
+watchdog==3.0.0

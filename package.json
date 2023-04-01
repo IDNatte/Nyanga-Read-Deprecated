@@ -1,49 +1,39 @@
 {
-  "name": "read-nyanga",
-  "version": "2.0.0",
-  "main": "./main.js",
-  "author": {
-    "email": "idnatte@gmail.com",
-    "name": "IDNatte",
-    "url": "https://github.com/IDNatt"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/IDNatte/mang-redr.git"
-  },
-  "description": "Nyanga Reader 😸",
-  "devDependencies": {
-    "@electron/rebuild": "^3.2.10",
-    "concurrently": "^8.0.1",
-    "electron": "^23.2.1",
-    "electron-builder": "^23.6.0",
-    "nodemon": "^2.0.22",
-    "prettier": "^2.8.7",
-    "prettierrc": "^0.0.0-5"
-  },
-  "scripts": {
-    "layout:dev": "cd layout && yarn run dev\n",
-    "electron:dev": "APP_DEV=true nodemon --exec electron .",
-    "electron:format": "prettier --write .",
-    "electron:test": "cd ./layout/ && yarn run build && cd .. && electron .",
-    "electron:nobuildtest": "electron .",
-    "electron:build": "electron-builder",
-    "electron:pack": "electron-builder --dir",
-    "electron:publish:win": "electron-builder --win -p always",
-    "electron:publish:linux": "electron-builder --linux -p always",
-    "app:dev": "concurrently --names \"SVELTEKIT,ELECTRON\" -c \"bgBlue.bold,bgMagenta.bold\" \"yarn run layout:dev\" \"yarn run electron:dev\"",
-    "app:postinstall": "electron-rebuild",
-    "app:build": "cd layout && yarn run build && cd .. && yarn run electron:build",
-    "app:release:win": "cd layout && yarn run build && cd .. && yarn run electron:publish:win",
-    "app:release:linux": "cd layout && yarn run build && cd .. && yarn run electron:publish:linux"
-  },
-  "dependencies": {
-    "electron-serve": "^1.1.0",
-    "electron-updater": "^5.3.0",
-    "lokijs": "^1.5.12",
-    "pouchdb": "^8.0.1",
-    "pouchdb-adapter-node-websql": "^7.0.0",
-    "pouchdb-find": "^8.0.1",
-    "sqlite3": "^5.1.6"
-  }
+	"name": "nyanga-read-layout",
+	"version": "0.1.0",
+	"scripts": {
+		"python:start": "APP_DEV=\"True\" ./.venv/Scripts/python ./window/app.py",
+		"svelte:dev": "vite dev",
+		"svelte:build": "vite build",
+		"svelte:preview": "vite preview",
+		"svelte:check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"svelte:check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"svelte:test:unit": "vitest",
+		"svelte:lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"svelte:format": "prettier --plugin-search-dir . --write .",
+		"python:build": "./.venv/Scripts/pyinstaller Nyanga-Read.spec",
+		"app:build": "yarn run svelte:build && yarn run python:build"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^2.0.1",
+		"@sveltejs/kit": "^1.5.0",
+		"@types/cookie": "^0.5.1",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"autoprefixer": "^10.4.14",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"postcss": "^8.4.21",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.8.1",
+		"svelte": "^3.54.0",
+		"svelte-check": "^3.0.1",
+		"tailwindcss": "^3.3.1",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^4.2.0",
+		"vitest": "^0.25.3"
+	},
+	"type": "module"
 }
