@@ -2,7 +2,7 @@
   <img src="./docs/images/logo.png" />
 </p>
 
-<p align="center"><strong>Project repo moved to [Gitlab](https://gitlab.com/IDNatte/Nyanga-Read)</strong></p>
+<p align="center"><strong>Archived, project repo moved to [Gitlab](https://gitlab.com/IDNatte/Nyanga-Read)</strong></p>
 
 # Nyanga Read 😸
 
